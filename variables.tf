@@ -29,5 +29,5 @@ variable "key_name" {
 
 variable "sec_group" {
         description = "Security group name"
-        default = "sg-0d35aa88f35596011"
+        default = ["sg-0d35aa88f35596011"]
 }
