@@ -5,6 +5,7 @@ pipeline{
         AWS_ACCESS_KEY_ID = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
         AWS_REGION = 'us-east-1'
+        booleanParam(name: 'destroy', defaultValue: false, description: 'Destroy Terraform build?')
     }
 
     stages {
@@ -18,6 +19,14 @@ pipeline{
                 sh 'terraform init'
                 sh 'terraform plan'
                 sh 'terraform apply --auto-approve'
+            }
+        }
+        stage('Terraform destroy') {
+            when {
+                equals expected: true, actual: params.destroy
+            }
+            steps {
+                sh 'terraform destroy'
             }
         }
     }
